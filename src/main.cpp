@@ -1,3 +1,70 @@
+
+#include <Arduino.h>
+#include <SPI.h>
+#include <MFRC522.h>
+#include "buzzer.h"
+#include "card.h"
+#include "setup_mode.h"
+#include "button.h"
+#include "global.h"
+#include "blink.h"
+
+void setup()
+{
+  Serial.begin(9600);
+  SPI.begin();
+  mfrc522.PCD_Init();
+  Serial.println("Lectura del UID");
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP); // Nút nhấn sử dụng điện trở kéo lên nội bộ
+  digitalWrite(RELAY_PIN, LOW);      // Khởi tạo relay ở trạng thái tắt
+}
+
+void loop()
+{
+
+  checkButtonForSetupMode();
+
+  if (isSetupModeActive())
+  {
+    handleSetupMode();
+  }
+  else
+  {
+    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
+    {
+      Serial.print("Card UID:");
+      for (byte i = 0; i < mfrc522.uid.size; i++)
+      {
+        Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+        Serial.print(mfrc522.uid.uidByte[i], HEX);
+      }
+      Serial.println();
+      mfrc522.PICC_HaltA();
+
+      if (isCardRegistered(mfrc522.uid.uidByte))
+      {
+        if (digitalRead(RELAY_PIN) == LOW)
+        {
+          digitalWrite(RELAY_PIN, HIGH);
+          buzzerBeep(1, 1000);
+        }
+        else
+        {
+          buzzerBeep(1, 1000);
+          digitalWrite(RELAY_PIN, LOW);
+        }
+      }
+      else
+      {
+        Serial.println("Unauthorized card.");
+      }
+    }
+  }
+}
+
 // #include <Arduino.h>
 // #include <SPI.h>
 // #include <MFRC522.h>
@@ -157,73 +224,3 @@
 //     }
 //   }
 // }
-
-#include <Arduino.h>
-#include <SPI.h>
-#include <MFRC522.h>
-#include "buzzer.h"
-#include "card.h"
-#include "setup_mode.h"
-#include "button.h"
-#include "global.h"
-#include "blink.h"
-
-void setup()
-{
-  Serial.begin(9600);
-  SPI.begin();
-  mfrc522.PCD_Init();
-  Serial.println("Lectura del UID");
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(RELAY_PIN, OUTPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP); // Nút nhấn sử dụng điện trở kéo lên nội bộ
-  digitalWrite(RELAY_PIN, LOW);      // Khởi tạo relay ở trạng thái tắt
-}
-
-void loop()
-{
-  // blinkLed(3, 500);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(500);
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(500);
-  // checkButtonForSetupMode();
-
-  // if (isSetupModeActive())
-  // {
-  //   handleSetupMode();
-  // }
-  // else
-  // {
-  //   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
-  //   {
-  //     Serial.print("Card UID:");
-  //     for (byte i = 0; i < mfrc522.uid.size; i++)
-  //     {
-  //       Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
-  //       Serial.print(mfrc522.uid.uidByte[i], HEX);
-  //     }
-  //     Serial.println();
-  //     mfrc522.PICC_HaltA();
-
-  //     if (isCardRegistered(mfrc522.uid.uidByte))
-  //     {
-  //       if (digitalRead(RELAY_PIN) == LOW)
-  //       {
-  //         digitalWrite(RELAY_PIN, HIGH);
-  //         buzzerBeep(1, 1000);
-  //       }
-  //       else
-  //       {
-  //         buzzerBeep(1, 1000);
-  //         digitalWrite(RELAY_PIN, LOW);
-  //       }
-  //     }
-  //     else
-  //     {
-  //       Serial.println("Unauthorized card.");
-  //     }
-  //   }
-  // }
-}
