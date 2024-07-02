@@ -19,7 +19,8 @@ void setup()
   pinMode(RELAY_PIN, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP); // Nút nhấn sử dụng điện trở kéo lên nội bộ
-  digitalWrite(RELAY_PIN, LOW);      // Khởi tạo relay ở trạng thái tắt
+  digitalWrite(RELAY_PIN, LOW);
+  digitalWrite(BUZZER_PIN, HIGH); // Khởi tạo relay ở trạng thái tắt
 }
 
 void loop()

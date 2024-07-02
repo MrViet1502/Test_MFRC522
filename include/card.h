@@ -5,5 +5,5 @@
 
 bool isCardRegistered(byte *uid);
 void storeCard(MFRC522::Uid uid);
-
+bool removeCard(byte *uid);
 #endif // CARD_H

@@ -9,15 +9,20 @@ void handleSetupMode()
 {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
     {
-        if (!isCardRegistered(mfrc522.uid.uidByte))
+        if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
         {
-            storeCard(mfrc522.uid);
+            if (!isCardRegistered(mfrc522.uid.uidByte))
+            {
+                storeCard(mfrc522.uid); // insert card
+
+                Serial.println("Card stored. Press the button to exit setup mode.");
+            }
+            else
+            {
+                if (removeCard(mfrc522.uid.uidByte)) // remove card
+                    Serial.println("Card remove complete!!!");
+            }
             mfrc522.PICC_HaltA();
-            Serial.println("Card stored. Press the button to exit setup mode.");
-        }
-        else
-        {
-            Serial.println("Card is already registered or memory is full.");
         }
     }
 
