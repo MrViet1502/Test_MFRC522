@@ -3,12 +3,12 @@
 #include "buzzer.h"
 #include "global.h"
 
-bool isSetupModeActive()
+bool isSetupModeActive() // enter mode Setup
 {
     return isSetupMode;
 }
 
-void checkButtonForSetupMode()
+void checkButtonForSetupMode() // Check button is 3s
 {
     if (digitalRead(BUTTON_PIN) == LOW)
     {
@@ -20,7 +20,7 @@ void checkButtonForSetupMode()
         {
             isSetupMode = true;
             Serial.println("Entering setup mode...");
-            buzzerBeep(3, 1000); // Buzzer kêu 3 lần mỗi lần 1s
+            buzzerBeep(3, 1000); // Buzzer sounds 3 times for 1 second each time
         }
     }
     else

@@ -5,11 +5,11 @@
 #include "buzzer.h"
 #include "global.h"
 
-void handleSetupMode()
+void handleSetupMode() // function when call setup mode
 {
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
     {
-        if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
+        if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) // check and read new card
         {
             if (!isCardRegistered(mfrc522.uid.uidByte))
             {
@@ -26,7 +26,7 @@ void handleSetupMode()
         }
     }
 
-    if (digitalRead(BUTTON_PIN) == LOW && buttonPressTime == 0)
+    if (digitalRead(BUTTON_PIN) == LOW && buttonPressTime == 0) // Setup mode ends when the button is pressed again
     {
         delay(100); // Debounce delay
         while (digitalRead(BUTTON_PIN) == LOW)

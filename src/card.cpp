@@ -2,7 +2,7 @@
 #include "card.h"
 #include "global.h"
 
-bool isCardRegistered(byte *uid)
+bool isCardRegistered(byte *uid) // function check card is registered
 {
     for (int i = 0; i < cardCount; i++)
     {
@@ -23,7 +23,7 @@ bool isCardRegistered(byte *uid)
     return false;
 }
 
-void storeCard(MFRC522::Uid uid)
+void storeCard(MFRC522::Uid uid) // function store card
 {
     if (cardCount < MAX_CARDS)
     {
@@ -42,7 +42,7 @@ void storeCard(MFRC522::Uid uid)
     }
 }
 
-bool removeCard(byte *uid)
+bool removeCard(byte *uid) // function remove card
 {
     for (int i = 0; i < cardCount; i++)
     {
@@ -57,7 +57,7 @@ bool removeCard(byte *uid)
         }
         if (match)
         {
-            // Di chuyển các thẻ còn lại lên trên để lấp chỗ trống
+            // Move the remaining cards up to fill the empty space
             for (int k = i; k < cardCount - 1; k++)
             {
                 for (int j = 0; j < 4; j++)

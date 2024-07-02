@@ -19,7 +19,7 @@ struct Card
     byte uid[4];
 };
 
-#define MAX_CARDS 10 // Số lượng thẻ tối đa có thể lưu
+#define MAX_CARDS 5 // Số lượng thẻ tối đa có thể lưu
 extern Card registeredCards[MAX_CARDS];
 extern int cardCount;
 

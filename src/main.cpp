@@ -26,15 +26,15 @@ void setup()
 void loop()
 {
 
-  checkButtonForSetupMode();
+  checkButtonForSetupMode(); // check call setup mode
 
   if (isSetupModeActive())
   {
-    handleSetupMode();
+    handleSetupMode(); // case setup mode
   }
   else
   {
-    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
+    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) // check and read new card
     {
       Serial.print("Card UID:");
       for (byte i = 0; i < mfrc522.uid.size; i++)
@@ -45,7 +45,7 @@ void loop()
       Serial.println();
       mfrc522.PICC_HaltA();
 
-      if (isCardRegistered(mfrc522.uid.uidByte))
+      if (isCardRegistered(mfrc522.uid.uidByte)) // if real card then relay on
       {
         if (digitalRead(RELAY_PIN) == LOW)
         {
@@ -65,7 +65,10 @@ void loop()
     }
   }
 }
+//============================================================================
+//============================================================================
 
+// Code before test
 // #include <Arduino.h>
 // #include <SPI.h>
 // #include <MFRC522.h>
