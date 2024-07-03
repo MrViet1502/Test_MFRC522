@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include "card.h"
 #include "global.h"
 
 bool isCardRegistered(byte *uid) // function check card is registered
@@ -77,4 +75,17 @@ bool removeCard(byte *uid) // function remove card
         }
     }
     return false;
+}
+
+void removeAll()
+{
+    cardCount = 0;
+    for (int i = 0; i < MAX_CARDS; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            registeredCards[i].uid[j] = 0;
+        }
+    }
+    Serial.println("All cards removed");
 }

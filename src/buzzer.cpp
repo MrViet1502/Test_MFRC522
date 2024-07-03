@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include "buzzer.h"
 #include "global.h"
 
 void buzzerBeep(int times, int duration) // The buzzer function sounds times and duration seconds
