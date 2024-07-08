@@ -47,7 +47,10 @@ void storeCard(MFRC522::Uid uid) // function store card
 
 bool removeCard(byte *uid) // function remove card
 {
+<<<<<<< HEAD
     // loadCardsFromEEPROM();
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
     for (int i = 0; i < cardCount; i++)
     {
         bool match = true;
@@ -76,7 +79,10 @@ bool removeCard(byte *uid) // function remove card
                 Serial.print(uid[i] < 0x10 ? " 0" : " ");
                 Serial.print(uid[i], HEX);
             }
+<<<<<<< HEAD
             saveCardsToEEPROM();
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
             Serial.println();
             return true;
         }
@@ -86,7 +92,10 @@ bool removeCard(byte *uid) // function remove card
 
 void removeAll()
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
     cardCount = 0;
     for (int i = 0; i < MAX_CARDS; i++)
     {
@@ -95,6 +104,9 @@ void removeAll()
             registeredCards[i].uid[j] = 0;
         }
     }
+<<<<<<< HEAD
     saveCardsToEEPROM();
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
     Serial.println("All cards removed");
 }

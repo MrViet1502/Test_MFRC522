@@ -3,14 +3,20 @@
 
 #include <Arduino.h>
 #include <MFRC522.h>
+<<<<<<< HEAD
 #include <EEPROM.h>
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
 #include "blink.h"
 #include "button.h"
 #include "buzzer.h"
 #include "card.h"
 #include "setup_mode.h"
 #include "relay.h"
+<<<<<<< HEAD
 #include "save_eeprom.h"
+=======
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
 
 // Pin definitions
 #define RST_PIN 9
@@ -28,7 +34,11 @@ struct Card
     byte uid[4];
 };
 
+<<<<<<< HEAD
 #define MAX_CARDS 5 // max number of cards
+=======
+#define MAX_CARDS 10 // max number of cards
+>>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
 extern Card registeredCards[MAX_CARDS];
 extern int cardCount;
 extern bool check_millis;
