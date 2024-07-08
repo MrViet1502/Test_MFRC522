@@ -3,5 +3,5 @@
 
 void checkButtonForSetupMode();
 bool isSetupModeActive();
-
+void checkButtonRemoveAll();
 #endif // BUTTON_H

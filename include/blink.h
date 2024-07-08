@@ -1,8 +1,8 @@
 #ifndef BLINK_H
 #define BLINK_H
 
-#include <Arduino.h>
+#include "global.h"
 
-void blinkLed(int times, int duration); // Khai báo hàm nhấp nháy LED
+void blinkLed(int times, int duration); // blink LED
 
 #endif // BLINK_H
