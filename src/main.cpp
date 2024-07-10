@@ -7,34 +7,38 @@ void setup()
   mfrc522.PCD_Init();
   Serial.println("Lectura del UID");
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(HOLD_PIN, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(READ_CONTROLER_PIN, INPUT_PULLUP);
+  pinMode(CONTROLER_PIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP); // Nút nhấn sử dụng điện trở kéo lên nội bộ
-<<<<<<< HEAD
-  digitalWrite(RELAY_PIN, LOW);      // Khởi tạo relay ở trạng thái tắt
-  digitalWrite(BUZZER_PIN, HIGH);    // Khởi tạo buzzer ở trạng thái tắt
+  pinMode(BUTTON_READ_PIN, INPUT_PULLUP);
+  digitalWrite(HOLD_PIN, LOW);    // Khởi tạo relay ở trạng thái tắt
+  digitalWrite(BUZZER_PIN, HIGH); // Khởi tạo buzzer ở trạng thái tắt
+  digitalWrite(CONTROLER_PIN, LOW);
   loadCardsFromEEPROM();
-=======
-  digitalWrite(RELAY_PIN, LOW);
-  digitalWrite(BUZZER_PIN, HIGH); // Khởi tạo relay ở trạng thái tắt
->>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
+  lastSignalTime_hold = millis();
+  // holdTime = millis();
 }
 
 void loop()
 {
-<<<<<<< HEAD
-  // loadCardsFromEEPROM();
-=======
 
->>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
+  // check_status_hold();
+  checkButtonRForOpen(); // check button R for open
+
+  if (isHoldForOpen()) // check button_read in 4s
+  {
+    if (!hold_first_time)
+    {
+      toggleHold();
+    }
+    }
   checkButtonForSetupMode(); // check call setup mode
 
   if (isSetupModeActive())
   {
-<<<<<<< HEAD
 
-=======
->>>>>>> e657ff699c87e41a4bb8cb35d83680436c940ffb
     handleSetupMode(); // case setup mode
   }
   else
@@ -52,13 +56,18 @@ void loop()
 
       if (isCardRegistered(mfrc522.uid.uidByte)) // if real card then relay on
       {
-        toggleRelay(); // on/off relay
+        toggleControl(); // on/off relay
       }
       else
       {
         Serial.println("Unauthorized card.");
       }
     }
+  }
+
+  if (holdHigh && !isSetupModeActive() && over10s()) // over 10s (holdHigh = 1 and isSetupModeActive = 0) -> off
+  {
+    toggleHold(); // on/off Hold
   }
 }
 //============================================================================
